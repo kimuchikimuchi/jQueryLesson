@@ -61,7 +61,9 @@
       // ・連続で何回もホバーした時、手を止めているのにリストがスライドし続けないか
       // ・出てきたリストの上にホバーできるか
       // ※必ずレビュー前に上記挙動が問題ないか確認すること
-      function mouseOverFunc() {
+
+      $(function() {
+        function mouseOverFunc() {
         $('li').children('.menu__list__childList').stop().slideDown();
       }
 
@@ -69,7 +71,6 @@
         $('li').children('.menu__list__childList').stop().slideUp();
       }
 
-      $(function() {
         $('.menu__list__title, .menu__list__childList').hover(mouseOverFunc, mouseOutFunc)
       });
     </script>
