@@ -64,11 +64,11 @@
 
       $(function() {
         function mouseOverFunc() {
-        $('li').children('.menu__list__childList').stop().slideDown();
+        $(this).parent().children('.menu__list__childList').stop().slideDown();
       }
 
       function mouseOutFunc() {
-        $('li').children('.menu__list__childList').stop().slideUp();
+        $(this).parent().children('.menu__list__childList').stop().slideUp();
       }
 
         $('.menu__list__title, .menu__list__childList').hover(mouseOverFunc, mouseOutFunc)
