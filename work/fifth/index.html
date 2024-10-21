@@ -103,14 +103,18 @@
 
         function filterList() {
           var selectedLanguage = $('.select').val();
-          $('.list li').each(function(index, element) {
-            showOrHideElement(element, selectedLanguage);
-          });
+          if (selectedLanguage === 'all') {
+            $('.list li').show();
+          } else {
+            $('.list li').each(function(index, element) {
+              showOrHideElement(element, selectedLanguage);
+            });
+          }
         }
 
         function showOrHideElement(element, selectedLanguage) {
           var category = $(element).data('category-type');
-          if (selectedLanguage === 'all' || category === selectedLanguage) {
+          if (category === selectedLanguage) {
             $(element).show();
           } else {
             $(element).hide();
