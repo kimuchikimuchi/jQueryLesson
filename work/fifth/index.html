@@ -104,7 +104,7 @@
         function filterList() {
           var selectedLanguage = $('.select').val();
           if (selectedLanguage === 'all') {
-            $('.list li').show();
+            return $('.list li').show();
           } else {
             $('.list li').each(function(index, element) {
               showOrHideElement(element, selectedLanguage);

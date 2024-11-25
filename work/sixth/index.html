@@ -15,7 +15,80 @@
   </div>
   <script src="../../common/js/jquery.js"></script>
   <script>
-    // 回答はここに書いてね
+$(function () {
+  $('.wrapper').on('click', '.search-btn', function () {
+    const randomId = Math.floor(Math.random() * 151) + 1;
+
+    $.ajax({
+      url: `https://pokeapi.co/api/v2/pokemon/${randomId}`,
+      method: 'GET',
+    })
+      .done(function (res) {
+        let speciesUrl = res.species.url;
+
+        $.ajax({
+          url: speciesUrl,
+          method: 'GET',
+        })
+          .done(function (speciesRes) {
+            let name = speciesRes.names.find((name) => name.language.name === 'ja').name;
+
+            let encountHtml = `
+              <p class="name">${name}</p>
+              <div>
+                <img class="img" src="${res.sprites.front_default}" alt="">
+              </div>
+              <div>
+                <button class="btn" id="catch">捕まえる</button>
+                <button class="btn" data-js="reset">逃げる</button>
+              </div>
+            `;
+            $('.wrapper').html(encountHtml);
+
+            $('#catch').click(function () {
+              $.ajax({
+                url: 'https://pokeapi.co/api/v2/item/4',
+                method: 'GET',
+              })
+                .done(function (res) {
+                  let doneHtml = `
+                    <p class="name">ゲットしました</p>
+                    <div>
+                      <img class="img" src="${res.sprites.default}" alt="">
+                    </div>
+                    <button class="btn" data-js="reset">戻る</button>
+                  `;
+                  let failHtml = `
+                    <p class="text">逃げられてしまった...</p>
+                    <button class="btn mt" data-js="reset">戻る</button>
+                  `;
+
+                  let randamNum = Math.floor(Math.random() * 10);
+
+                  if (randamNum < 5) {
+                    $('.wrapper').html(doneHtml);
+                  } else {
+                    $('.wrapper').html(failHtml);
+                  }
+                })
+                .fail(function (err) {
+                  console.error('モンスタボールAPIの取得に失敗しました: ', err);
+                });
+            });
+          })
+          .fail(function (err) {
+            console.error('詳細APIの取得に失敗しました: ', err);
+          });
+      })
+      .fail(function (err) {
+        console.error('ポケモンAPIの取得に失敗しました: ', err);
+      });
+  });
+
+  $('.wrapper').on('click', '[data-js="reset"]', function () {
+    window.location.href = '/work/sixth/index.html';
+  });
+});
   </script>
 </body>
 </html>
