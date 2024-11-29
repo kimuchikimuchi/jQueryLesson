@@ -30,8 +30,8 @@ $(function () {
           url: speciesUrl,
           method: 'GET',
         })
-          .done(function (speciesRes) {
-            let name = speciesRes.names.find((name) => name.language.name === 'ja').name;
+          .done(function (responseData) {
+            let name = responseData.names.find((name) => name.language.name === 'ja').name;
 
             let encountHtml = `
               <p class="name">${name}</p>
@@ -86,7 +86,7 @@ $(function () {
   });
 
   $('.wrapper').on('click', '[data-js="reset"]', function () {
-    window.location.href = '/work/sixth/index.html';
+    $('.wrapper').html('<button type="button" class="btn search-btn">ポケモンを探す</button>');
   });
 });
   </script>
